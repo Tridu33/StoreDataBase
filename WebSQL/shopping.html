@@ -1,0 +1,224 @@
+</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta name="author" content="Tridu33" />
+    <meta name="copyright" content="版权" />
+    <meta name="description" content="描述" />
+    <meta name="keywords" content="关键字" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="screen-orientation" content="portrait">
+    <!-- uc强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ShoppingWebSQL</title>
+    <link rel="stylesheet" href="">
+    <style>
+        input,
+        button {
+            border: none;
+            outline: none;
+        }
+        
+        .tl-price-input {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 7px 0;
+            background: #F4F4F7;
+            border-radius: 3px;
+            padding-left: 5px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }
+        
+        .tl-price-input:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+        }
+        
+        .ant-btn {
+            line-height: 1.499;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+            white-space: nowrap;
+            text-align: center;
+            background-image: none;
+            border: 1px solid transparent;
+            -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+            cursor: pointer;
+            -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            height: 32px;
+            padding: 0 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            color: rgba(0, 0, 0, 0.65);
+            background-color: #fff;
+            border-color: #d9d9d9;
+        }
+        
+        .ant-btn-primary {
+            color: #fff;
+            background-color: #1890ff;
+            border-color: #1890ff;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+            -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+        }
+        
+        .ant-btn-blue {
+            color: rgb(41, 43, 71);
+            background-color: rgb(209, 234, 248);
+            border-color: #FFFF00;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+            -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+        }
+        /**/
+        
+        .content {
+            padding-top: 50px;
+        }
+        
+        .websql {
+            margin-top: 10px;
+        }
+        /* 设置按钮样式 */
+        
+        .websql input[type=button] {
+            height: 44px;
+            width: 120px;
+        }
+        
+        .txt {
+            -webkit-text-stroke: 1px rgb(141, 84, 98);
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body link="blue" vlink="purple">
+    <div class="content">
+        <div class="websql">
+            <input type="button" value="新建/打开DB" class="ant-btn ant-btn-blue" onclick="creatTable()">
+        </div>
+        <div class="websql">
+            <!--增-->
+            <input type="button" value="插入数据" class="ant-btn ant-btn-blue" onclick="insterData()">
+        </div>
+        <div class="websql">
+            <!--删-->
+            <input type="button" value="删除一条数据" class="ant-btn ant-btn-blue" onclick="deleteAData()">
+        </div>
+        <div class="websql">
+            <!--删-->
+            <input type="button" value="删除全部数据" class="ant-btn ant-btn-blue" onclick="deleteAllData()">
+        </div>
+        <div class="websql">
+            <!--改-->
+            <!--根据tableName修改数据 * tableName:表单名 * id:匹配主键 * attribute:要变的属性 * value:要变的属性值 "SID", "1", "SNAME", "新的名字"-->
+            <form action="">
+                <div style="width: 90px;float: left">
+                    <div class="txt">要变的表单: </div>
+                    <input type="text" class="tl-price-input" id="tableName" value="Supplier"></div>
+                <br></br><br></br>
+                <div style="width: 90px;float: left">
+                    <div class="txt">主键属性: </div><input type="text" class="tl-price-input" id="idName" value="SID"></div>
+
+                <div style="width: 90px;float: left">
+                    <div class="txt">主键值: </div><input type="text" class="tl-price-input" id="id" value="1"></div>
+                <br></br><br></br>
+                <div style="width: 90px;float: left">
+                    <div class="txt">要变的属性: </div><input type="text" class="tl-price-input" id="SNAME" value="SNAME"></div>
+
+                <div style="width: 90px;float: left">
+                    <div class="txt">要变的新值:</div><input type="text" class="tl-price-input" id="value" value="NewName"></div>
+                <br></br><br></br>
+                <div style="width: 60px;float: left;margin-left: 20px"><input type="button" value="修改数据" class="ant-btn ant-btn-blue" onclick="UpdateTable()">
+                </div>
+            </form>
+            <br></br><br></br>
+            <!--查-->
+            <div style="width: 60px;float: left;margin-left: 20px">
+                <input type="button" value="查找一条数据" class="ant-btn ant-btn-blue" onclick="selectAData()">
+                <input type="button" value="查找全部数据" class="ant-btn ant-btn-blue" onclick="selectALlData()">
+            </div>
+        </div>
+
+        <script src="shopping.js"></script>
+        <script type="text/javascript">
+            function  creatTable()  {              
+                console.log("新建/打开DB");
+                websqlOpenDB();               
+                websqlCreatTable();     
+            }           
+            function  insterData()  {                 
+                console.log("插入数据");                 
+                websqlInsterDataToTable();                
+            }      
+            var tableName_Input = document.getElementById("tableName").value;       
+            var idName_Input = document.getElementById("idName").value;       
+            var id_Input = document.getElementById("id").value;  
+            var SNAME_Input = document.getElementById("SNAME").value;       
+            var value_Input = document.getElementById("value").value;       
+            function  UpdateTable()  {                 
+                console.log("修改数据");
+                websqlUpdateAData(tableName_Input, idName_Input, id_Input, SNAME_Input, value_Input);                          
+            }    
+            function  dropATable()  {                 
+                console.log("删除一个表格GOODS示例"); 
+                dropTable(sGOODS);                           
+            }          
+            function  deleteAData()  {                 
+                console.log("删除一条数据");                 
+                websqlDeleteADataFromTable(sSupplier, "1");            
+            }             
+            function  deleteAllData()  {                 
+                console.log("删除全部数据");                 
+                websqlDeleteAllDataFromTable(sSupplier);  
+                websqlDeleteAllDataFromTable(sGOODS);
+                websqlDeleteAllDataFromTable(sGathering);
+                websqlDeleteAllDataFromTable(sRefund);
+                websqlDeleteAllDataFromTable(sCustomer);
+                websqlDeleteAllDataFromTable(sIOForms);            
+            }             
+            function  deleteAData()  {                 
+                console.log("删除一个表");                 
+                websqlDeleteADataFromTable(sSupplier, "1");            
+            }  
+            function  selectAData()  {                 
+                console.log("查找一条数据");                 
+                websqlGetAData(sSupplier, "1");             
+            }             
+            function  selectALlData()  {                 
+                console.log("查找全部数据");                 
+                websqlGetAllData(sGOODS);             
+            }
+        </script>
+
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta name="author" content="Tridu33" />
+    <meta name="copyright" content="版权" />
+    <meta name="description" content="描述" />
+    <meta name="keywords" content="关键字" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="screen-orientation" content="portrait">
+    <!-- uc强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <title>ShoppingIndexDB</title>
+    <link rel="stylesheet" href="">
+    <style>
+        input,
+        button {
+            border: none;
+            outline: none;
+        }
+        
+        .ant-btn {
+            line-height: 1.499;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+            white-space: nowrap;
+            text-align: center;
+            background-image: none;
+            border: 1px solid transparent;
+            -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+            cursor: pointer;
+            -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            height: 32px;
+            padding: 0 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            color: rgba(0, 0, 0, 0.65);
+            background-color: #fff;
+            border-color: #d9d9d9;
+        }
+        
+        .ant-btn-blue {
+            color: rgb(41, 43, 71);
+            background-color: rgb(209, 234, 248);
+            border-color: #FFFF00;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+            -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+        }
+        
+        .buttonbox {
+            margin-top: 10px;
+        }
+        /* 设置按钮样式 */
+        
+        .buttonbox input[type=button] {
+            height: 44px;
+            width: 180px;
+        }
+        
+        .txt {
+            -webkit-text-stroke: 1px rgb(141, 84, 98);
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+    <script src=""></script>
+    <script type="text\javascript">
+
+    </script>
+    <!-- 不是立即执行的自定义函数 -->
+</head>
+
+<body link="blue" vlink="purple">
+    <h1>
+        <div class="txt">欢迎来到致远超市</div>
+    </h1>
+    </h1>
+    <!--增-->
+
+    <div class="buttonbox">
+        <input type="button" value="插入表的数据" class="ant-btn ant-btn-blue" onclick="createTableinsertData()">
+
+    </div>
+    <!--删改-->
+    <div class="buttonbox">
+        <input type="button" value="删除全部数据示例" class="ant-btn ant-btn-blue" onclick="deleteAllData()">
+    </div>
+    <div class="buttonbox">
+        <input type="button" value="更新一条数据示例" class="ant-btn ant-btn-blue" onclick="UpdateData()">
+    </div>
+    <!--查-->
+    <div class="buttonbox">
+        <text class="txt">要操作的表单</text>
+        <input type="text" class="buttonbox" id="tableName" value="Supplier">
+    </div>
+    <div class="buttonbox">
+        <input type="button" value="查一条数据示例" class="ant-btn ant-btn-blue" onclick="selectAData()">
+        <input type="button" value="查全部数据示例" class="ant-btn ant-btn-blue" onclick="selectALlData()">
+    </div>
+    <!--删，数据输入输出和其他表格建立方法同理，根据需要写对应传参函数就行-->
+    <div class="buttonbox">
+        <input type="button" value="删除一条数据示例" class="ant-btn ant-btn-blue" onclick="deleteAData()">
+        <input type="button" value="使用索引" class="ant-btn ant-btn-blue" onclick="useIndex()">
+    </div>
+    <br>
+    <h1>
+        <div class="txt">IOForm表-输入输出实例</div>
+    </h1>
+    <form id="IOform">
+
+        <p>交易时间：<input type="date" value="2020-02-26" name="IOTIME" required></p>
+        <p>商品类型ID：<input name="GID" placeholder="11" required autocomplete="off"></p>
+        <p>交易金额/元：<input name="IOMONEY" placeholder="1200" required autocomplete="off"></p>
+        <p>销售流水号：<input name="CID" placeholder="1111101" required autocomplete="off"></p>
+        <p>商品数量：<input name="GCOUNT" placeholder="100" required autocomplete="off"></p>
+        <p>备注信息:
+            <br>
+            <textarea rows="7" placeholder="非必填" name="remark"></textarea></p>
+        <p><input type="submit" class="ant-btn ant-btn-blue" value="确定交易"></p>
+    </form>
+    <input type="button" value="Show数据" class="ant-btn ant-btn-blue" onclick="ConsleShowData()">
+    <div id="IOresult" class="result">
+        <table>
+            <thead>
+                <tr>
+                    <th>交易时间</th>
+                    <th>商品类型ID</th>
+                    <th>交易金额</th>
+                    <th>销售流水号</th>
+                    <th>商品数量</th>
+                    <th>备注信息</th>
+                    <th width="30">操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="IOstatus" class="status">Loading...</div>
+    </div>
+    <!-- 列表数据模板 -->
+    <script id="IOtplList" type="text/template">
+        <tr>
+            <td data-key="IOTIME" data-id="$id$" contenteditable="plaintext-only">$IOTIME$</td>
+            <td data-key="GID" data-id="$id$" contenteditable="plaintext-only">$GID$</td>
+            <td data-key="CID" data-id="$id$" contenteditable="plaintext-only">$CID$</td>
+            <td data-key="IOMONEY" data-id="$id$" contenteditable="plaintext-only">$IOMONEY$</td>
+            <td data-key="GCOUNT" data-id="$id$" contenteditable="plaintext-only">$GCOUNT$</td>
+            <td data-key="remark" data-id="$id$" contenteditable="plaintext-only">$remark$</td>
+            <td><a href="javascript:" role="button" class="jsListDel" data-id="$id$">删除</a></td>
+        </tr>
+    </script>
+
+    <!-- 可以放函数也可以放立即执行的语句, 如果需要和网页元素互动的（比如获取某个标签的值或者给某个标签赋值），Javascript代码务必在标签的后面-->
+    <script src="./ShoppingIndexDB.js"></script>
+    <script type="text/javascript">
+        function ConsleShowData() {
+            method.show();
+        }
+
+        function  createTableinsertData()  {              
+            console.log("新建/打开DB");              
+            indexDBInsterDataToTable();     
+        }                                  
+        function  deleteAllData()  {                 
+            console.log("删除全部数据");                 
+            indexDBDeleteAllDataFromTable(sSupplier);  
+            indexDBDeleteAllDataFromTable(sGOODS);
+            indexDBDeleteAllDataFromTable(sGathering);
+            indexDBDeleteAllDataFromTable(sRefund);
+            indexDBDeleteAllDataFromTable(sCustomer);
+            indexDBDeleteAllDataFromTable(sIOForms);            
+        }             
+
+        function  UpdateData()  {                 
+            console.log("修改数据");
+            data = {
+                SID: "1",
+                GID: "11",
+                SLOC: "GZ",
+                SNAME: "更新名字"
+            }; //倒腾到这一步，懒得做输入输出。
+            indexDBUpdateAData(sSupplier, 1, data);                          
+        } 
+        var tableName_Input = document.getElementById("tableName").value;  
+        function  selectAData()  {                 
+            console.log("查找一条数据");                 
+            indexDBGetAData(tableName_Input, 1);             
+        }             
+        function  selectALlData()  {                 
+            console.log("查找全部数据");                 
+            indexDBGetAllData(tableName_Input);             
+        }
+
+        function  deleteAData()  {                 
+            console.log("删除一条数据");                 
+            indexDBDeleteADataFromTable(tableName_Input, 1);            
+        }
+    </script>
+    <!-- 实在为了省心基本可以放这里，可以放函数也可以放立即执行的语句, 如果需要和网页元素互动的（比如获取某个标签的值或者给某个标签赋值），Javascript代码务必在标签的后面 -->
+</body>
+
+</html>
+
+</html>
